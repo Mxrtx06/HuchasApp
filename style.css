@@ -1,12 +1,15 @@
+
 :root {
-  --berry: #420d19;      /* textos, bordes y botones */
-  --cereza: #2f020c;     /* el más oscuro */
-  --batido: #f6bad6;     /* rosa vivo */
-  --sorbete: #f1d3df;    /* rosa suave, fondo de la app */
-  --smoothie: #741e31;   /* granate: barras de progreso */
+  --berry: #420d19;
+  --cereza: #2f020c;
+  --batido: #f6bad6;
+  --sorbete: #f1d3df;
+  --smoothie: #741e31;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -15,166 +18,502 @@ body {
   color: var(--berry);
   background: var(--sorbete);
   padding: env(safe-area-inset-top, 0) 16px env(safe-area-inset-bottom, 0);
+  transition: background 0.3s ease;
 }
 
-main { max-width: 420px; margin: 0 auto; padding: 24px 0 40px; text-align: center; }
-main[hidden] { display: none; }
+main {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 24px 0 40px;
+  text-align: center;
+}
 
-h1 { font-family: "Great Vibes", cursive; font-weight: 400; font-size: 3rem; line-height: 1.1; margin: 0 0 12px; }
-h2 { font-size: 1.1rem; margin: 24px 0 10px; }
+main[hidden] {
+  display: none;
+}
 
-/* ---------- Fondos de página por tipo ---------- */
-.fondo-viaje      { background: linear-gradient(180deg, var(--batido), var(--sorbete)); }
-.fondo-ropa       { background: linear-gradient(180deg, var(--sorbete), var(--batido)); }
-.fondo-regalos    { background: linear-gradient(135deg, var(--batido), var(--sorbete)); }
-.fondo-tecnologia { background: linear-gradient(135deg, var(--sorbete), var(--batido)); }
-.fondo-otro       { background: radial-gradient(circle at 50% 0, var(--batido), var(--sorbete) 70%); }
+h1 {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 1.1;
+  margin: 0 0 12px;
+}
 
-/* Cuando hay imagen elegida, se ve entera y centrada (la imagen se pone desde JS) */
-.con-imagen { background-size: cover; background-position: center; background-repeat: no-repeat; }
-body.con-imagen { background-attachment: fixed; }
-body.con-imagen main { margin-top: 16px; padding: 24px 16px 40px; border-radius: 20px; background: rgba(241,211,223,.88); }
+h2 {
+  font-size: 1.1rem;
+  margin: 24px 0 10px;
+}
 
-/* ---------- Pantalla de la lista ---------- */
-.lista { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-/* La carpeta (estilo macOS): un panel trasero con pestaña y otro delantero */
+/* ---------- Fondos por tipo ---------- */
+
+.fondo-viaje {
+  background: linear-gradient(180deg, var(--batido), var(--sorbete));
+}
+
+.fondo-ropa {
+  background: linear-gradient(180deg, var(--sorbete), var(--batido));
+}
+
+.fondo-regalos {
+  background: linear-gradient(135deg, var(--batido), var(--sorbete));
+}
+
+.fondo-tecnologia {
+  background: linear-gradient(135deg, var(--sorbete), var(--batido));
+}
+
+.fondo-otro {
+  background: radial-gradient(circle at 50% 0, var(--batido), var(--sorbete) 70%);
+}
+
+.con-imagen {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body.con-imagen {
+  background-attachment: fixed;
+}
+
+body.con-imagen main {
+  margin-top: 16px;
+  padding: 24px 16px 40px;
+  border-radius: 20px;
+  background: rgba(241, 211, 223, 0.88);
+}
+
+/*Lista Hucha*/
+
+.lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
 .tile {
-  position: relative; aspect-ratio: 1.15; padding: 0; border: 0; background: none;
-  font: inherit; color: var(--berry); text-align: left; cursor: pointer;
-  transition: transform .15s;
-  --trasera: #e79bbd;        /* color del panel de atrás y la pestaña */
-  --frente: var(--batido);   /* color o dibujo del panel de delante */
-}
-.tile:hover { transform: translateY(-3px); }
-.tile::before { /* panel de atrás */
-  content: ""; position: absolute; left: 0; right: 0; top: 11%; bottom: 0;
-  border-radius: 0 16px 16px 16px; background: var(--trasera);
-}
-.pestana {
-  position: absolute; left: 0; top: 2%; width: 40%; height: 14%;
-  border-radius: 12px 12px 0 0; background: var(--trasera);
-}
-.cuerpo { /* panel de delante */
-  position: absolute; inset: 21% 0 0 0;
-  display: flex; flex-direction: column; padding: 12px; overflow: hidden;
-  border-radius: 16px; background: var(--frente);
-  box-shadow: 0 -2px 6px rgba(66,13,25,.18), 0 10px 16px rgba(66,13,25,.25), inset 0 2px 0 rgba(255,255,255,.6);
-}
-/* Textos con pastilla clara para que se lean sobre cualquier fondo */
-.cuerpo strong, .cuerpo small, .mini { position: relative; }
-.cuerpo strong {
-  align-self: flex-start; font-size: 1.2rem; line-height: 1.1;
-  padding: 2px 8px; border-radius: 8px; background: rgba(241,211,223,.92);
-}
-.cuerpo small {
-  align-self: flex-start; margin-top: auto; font-weight: 500;
-  padding: 1px 8px; border-radius: 8px; background: rgba(241,211,223,.92);
-}
-.mini { display: block; height: 8px; margin-top: 6px; border-radius: 99px; background: rgba(255,255,255,.8); overflow: hidden; }
-.mini span { display: block; height: 100%; background: var(--smoothie); }
+  position: relative;
+  aspect-ratio: 1.15;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--berry);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.15s;
 
-/* Un estilo de carpeta por tipo: solo cambian los dos colores */
-.carpeta-viaje { /* cuadros vichy rosa */
+  --trasera: #e79bbd;
+  --frente: var(--batido);
+}
+
+.tile:hover {
+  transform: translateY(-3px);
+}
+
+.tile::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 11%;
+  bottom: 0;
+  border-radius: 0 16px 16px 16px;
+  background: var(--trasera);
+}
+
+.pestana {
+  position: absolute;
+  left: 0;
+  top: 2%;
+  width: 40%;
+  height: 14%;
+  border-radius: 12px 12px 0 0;
+  background: var(--trasera);
+}
+
+.cuerpo {
+  position: absolute;
+  inset: 21% 0 0 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--frente);
+  box-shadow:
+    0 -2px 6px rgba(66, 13, 25, 0.18),
+    0 10px 16px rgba(66, 13, 25, 0.25),
+    inset 0 2px 0 rgba(255, 255, 255, 0.6);
+}
+
+.cuerpo strong,
+.cuerpo small,
+.mini {
+  position: relative;
+}
+
+.cuerpo strong {
+  align-self: flex-start;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 1.2rem;
+  line-height: 1.1;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: rgba(241, 211, 223, 0.92);
+}
+
+.cuerpo small {
+  align-self: flex-start;
+  max-width: 100%;
+  margin-top: auto;
+  font-weight: 500;
+  padding: 1px 8px;
+  border-radius: 8px;
+  background: rgba(241, 211, 223, 0.92);
+}
+
+.mini {
+  display: block;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+}
+
+.mini span {
+  display: block;
+  height: 100%;
+  background: var(--smoothie);
+}
+
+/*Diseños de las carpetas*/
+
+.carpeta-viaje {
   --trasera: #e79bbd;
   --frente:
-    repeating-linear-gradient(0deg, rgba(246,186,214,.8) 0 12px, transparent 12px 24px),
-    repeating-linear-gradient(90deg, rgba(246,186,214,.8) 0 12px, transparent 12px 24px),
+    repeating-linear-gradient(
+      0deg,
+      rgba(246, 186, 214, 0.8) 0 12px,
+      transparent 12px 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(246, 186, 214, 0.8) 0 12px,
+      transparent 12px 24px
+    ),
     #fff4f8;
 }
-.carpeta-ropa { /* lisa, casi blanca */
-  --trasera: hwb(324 24% 56%);
+
+.carpeta-ropa {
+  --trasera: #8d4167;
   --frente: linear-gradient(180deg, #c09fac, #8d4167);
 }
-.carpeta-regalos { /* cuadros vichy granate */
+
+.carpeta-regalos {
   --trasera: var(--smoothie);
   --frente:
-    repeating-linear-gradient(0deg, rgba(116,30,49,.4) 0 12px, transparent 12px 24px),
-    repeating-linear-gradient(90deg, rgba(116,30,49,.4) 0 12px, transparent 12px 24px),
+    repeating-linear-gradient(
+      0deg,
+      rgba(116, 30, 49, 0.4) 0 12px,
+      transparent 12px 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(116, 30, 49, 0.4) 0 12px,
+      transparent 12px 24px
+    ),
     #fbe3ec;
 }
-.carpeta-tecnologia { /* lisa, rosa vivo */
-  --trasera: #e08db3;
-  --frente: linear-gradient(180deg, #f9c9df, var(--batido));
+
+.carpeta-tecnologia {
+  --trasera: #d12874;
+  --frente: linear-gradient(180deg, #e2a1c0, var(--batido));
 }
-.carpeta-otro { /* lisa, granate oscuro */
+
+.carpeta-otro {
   --trasera: var(--berry);
   --frente: linear-gradient(180deg, #85283c, var(--smoothie));
 }
-/* Si elegiste una imagen, rellena la carpeta entera */
-.cuerpo.con-imagen { background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+/*Fondo personalizado de cada carpeta*/
+
+.cuerpo.con-imagen {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/*Botón para añadir una hucha*/
 
 .tile-nueva {
-  display: flex; align-items: center; justify-content: center;
-  border: 3px dashed var(--berry); border-radius: 20px; font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px dashed var(--berry);
+  border-radius: 20px;
+  font-size: 3rem;
 }
 
-/* ---------- Formularios y botones ---------- */
-form { display: grid; gap: 16px; text-align: left; }
-label { display: grid; gap: 6px; font-weight: 700; }
-input, select {
-  font: inherit; padding: 12px 14px; border-radius: 12px;
-  border: 2px solid var(--berry); background: #fff8fb; color: var(--berry);
+/*Formularios*/
+
+form {
+  display: grid;
+  gap: 16px;
+  text-align: left;
 }
-button { font: inherit; cursor: pointer; }
+
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 700;
+}
+
+input,
+select {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid var(--berry);
+  background: #fff8fb;
+  color: var(--berry);
+}
+
+input[type="file"] {
+  font-size: 0.9rem;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
 .principal {
-  padding: 14px; border: 0; border-radius: 14px;
-  background: var(--berry); color: var(--sorbete); font-weight: 700;
+  padding: 14px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--berry);
+  color: var(--sorbete);
+  font-weight: 700;
 }
+
 .secundario {
-  margin-top: 28px; padding: 10px 16px; border-radius: 12px;
-  border: 2px solid var(--berry); background: transparent; color: var(--berry);
+  margin-top: 28px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 2px solid var(--berry);
+  background: transparent;
+  color: var(--berry);
 }
-.volver { margin: 0 0 12px; }
-form .secundario { margin-top: 0; }
-:focus-visible { outline: 3px solid var(--berry); outline-offset: 2px; }
 
-/* ---------- Hucha y animaciones ---------- */
-.escenario { position: relative; width: 300px; height: 220px; margin: 0 auto; }
-.escenario svg { display: block; overflow: visible; }
+.volver {
+  margin: 0 0 12px;
+}
 
-#hucha { transform-origin: 150px 125px; }
-#hucha.temblar { animation: temblar .45s ease-out; }
+form .secundario {
+  margin-top: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--berry);
+  outline-offset: 2px;
+}
+
+/*Cerdito con imagen*/
+
+.escenario {
+  position: relative;
+  width: 300px;
+  max-width: 100%;
+  height: 220px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagen-cerdito {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: center;
+}
+
+.imagen-cerdito.temblar {
+  animation: temblar 0.45s ease-out;
+}
+
 @keyframes temblar {
-  0%, 100% { transform: rotate(0) scale(1); }
-  25% { transform: rotate(-3deg) scale(1.03); }
-  60% { transform: rotate(2deg) scale(.98); }
+  0%, 100% {
+    transform: rotate(0) scale(1);
+  }
+
+  25% {
+    transform: rotate(-3deg) scale(1.03);
+  }
+
+  60% {
+    transform: rotate(2deg) scale(0.98);
+  }
 }
+
+/* Monedas y billetes animados*/
 
 .pieza {
-  position: absolute; top: -50px; z-index: 2;
-  display: grid; place-items: center;
-  font-weight: 700; color: var(--berry);
-  animation: caer .8s cubic-bezier(.5, 0, .9, .6) forwards;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: var(--berry);
+  animation: caer 0.8s cubic-bezier(0.5, 0, 0.9, 0.6) forwards;
+  pointer-events: none;
 }
+
 .pieza.moneda {
-  left: 132px; width: 36px; height: 36px; border-radius: 50%;
-  background: var(--batido); border: 3px solid var(--berry); font-size: .7rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f7e242;
+  border-color: #f1843b;
+  font-size: 0.65rem;
+  transform: translateX(-50%);
 }
+
 .pieza.billete {
-  left: 120px; width: 60px; height: 32px; border-radius: 4px;
-  background: var(--smoothie); border: 2px solid var(--cereza); color: var(--sorbete); font-size: .8rem;
+  width: 60px;
+  height: 32px;
+  border-radius: 4px;
+  background: #216620;
+  border-color: #82c958;
+  color: #ffffff;
+  font-size: 0.75rem;
+  transform: translateX(-50%);
 }
+
 @keyframes caer {
-  0%   { transform: translateY(0) rotate(0); opacity: 1; }
-  80%  { transform: translateY(104px) rotate(200deg) scale(.7); opacity: 1; }
-  100% { transform: translateY(112px) rotate(240deg) scale(.5); opacity: 0; }
+  0% {
+    top: -40px;
+    opacity: 1;
+  }
+
+  80% {
+    top: 104px;
+    opacity: 1;
+  }
+
+  100% {
+    top: 112px;
+    opacity: 0;
+  }
 }
 
-/* ---------- Cantidad y progreso ---------- */
-.cantidad { margin: 12px 0 6px; font-size: 1.2rem; }
-.cantidad strong { font-size: 1.9rem; }
-.barra { height: 14px; border-radius: 99px; background: rgba(255,255,255,.7); overflow: hidden; }
-#relleno { height: 100%; width: 0; background: var(--smoothie); transition: width .5s ease; }
-#mensaje { min-height: 1.5em; margin: 8px 0 0; font-weight: 700; }
+/*Cantidad y progreso*/
 
-/* ---------- Botones de dinero ---------- */
-.dinero { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-.dinero button { border: 3px solid; color: var(--berry); font-weight: 700; transition: transform .1s; }
-.dinero button:active { transform: scale(.92); }
-.dinero .moneda { width: 56px; height: 56px; border-radius: 50%; background: var(--batido); border-color: var(--berry); }
-.dinero .billete { width: 84px; height: 48px; border-radius: 6px; background: var(--smoothie); border-color: var(--cereza); color: var(--sorbete); }
+.cantidad {
+  margin: 12px 0 6px;
+  font-size: 1.2rem;
+}
+
+.cantidad strong {
+  font-size: 1.9rem;
+}
+
+.barra {
+  height: 14px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+}
+
+#relleno {
+  height: 100%;
+  width: 0;
+  background: var(--smoothie);
+  transition: width 0.5s ease;
+}
+
+#mensaje {
+  min-height: 1.5em;
+  margin: 8px 0 0;
+  font-weight: 700;
+}
+
+/*Botones del dinero*/
+
+.dinero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.dinero button {
+  border: 3px solid;
+  color: var(--berry);
+  font-weight: 700;
+  transition: transform 0.1s;
+}
+
+.dinero button:active {
+  transform: scale(0.92);
+}
+
+
+.dinero .moneda {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #f7e242;
+  border-color: #f1843b;
+}
+
+.dinero .billete {
+  width: 84px;
+  height: 48px;
+  border-radius: 6px;
+  background: #216620;
+  border-color: #82c958;
+  color: #ffffff;
+}
+
+/*Móviles pequeños*/
+
+@media (max-width: 360px) {
+  .lista {
+    gap: 10px;
+  }
+
+  .cuerpo {
+    padding: 8px;
+  }
+
+  .cuerpo strong {
+    font-size: 1rem;
+  }
+
+  .cuerpo small {
+    font-size: 0.75rem;
+  }
+}
+
+/*Accesibilidad*/
 
 @media (prefers-reduced-motion: reduce) {
-  .pieza, #hucha.temblar { animation-duration: .01s; }
-  #relleno { transition: none; }
+  .pieza,
+  .imagen-cerdito.temblar {
+    animation-duration: 0.01s;
+  }
+
+  #relleno {
+    transition: none;
+  }
 }
