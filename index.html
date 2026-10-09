@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mis huchas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Pantalla 1: lista de huchas (cuadrados) -->
+  <main id="pantalla-lista" hidden>
+    <h1>Mis huchas</h1>
+    <div class="lista" id="lista"></div>
+  </main>
+
+  <!-- Pantalla 2: crear una hucha nueva -->
+  <main id="pantalla-nueva" hidden>
+    <h1>Nueva hucha</h1>
+    <form id="form-meta">
+      <label>¿Para qué ahorras?
+        <input id="nombre" type="text" placeholder="Viaje a Roma" maxlength="30" required>
+      </label>
+      <label>Tipo (cambia el fondo)
+        <select id="tipo">
+          <option value="viaje">Viaje</option>
+          <option value="ropa">Ropa</option>
+          <option value="regalos">Regalos</option>
+          <option value="tecnologia">Tecnología</option>
+          <option value="otro">Otro</option>
+        </select>
+      </label>
+      <label>Imagen de fondo (opcional)
+        <input id="imagen" type="file" accept="image/*">
+      </label>
+      <label>¿Cuánto quieres conseguir? (€)
+        <input id="meta" type="number" min="1" step="0.01" placeholder="800" required>
+      </label>
+      <button type="submit" class="principal">Crear hucha</button>
+      <button type="button" id="cancelar" class="secundario">Cancelar</button>
+    </form>
+  </main>
+
+  <!-- Pantalla 3: una hucha abierta -->
+  <main id="pantalla-hucha" hidden>
+    <button id="volver" class="secundario volver">← Mis huchas</button>
+    <h1 id="titulo"></h1>
+
+    <div class="escenario" id="escenario">
+      <svg viewBox="0 0 300 220" width="300" height="220" aria-label="Hucha con forma de cerdito">
+        <defs>
+          <!-- La forma del cuerpo, definida una vez y usada varias -->
+          <path id="forma-cuerpo" d="M62,130 C62,92 100,66 150,66 C190,66 220,82 232,104 L244,106 Q264,108 264,126 Q264,142 246,144 L236,144 C226,172 192,192 150,192 C102,192 62,170 62,130 Z"/>
+          <clipPath id="cuerpo"><use href="#forma-cuerpo"/></clipPath>
+        </defs>
+        <g id="hucha" fill="none" stroke="#2f020c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+          <use href="#forma-cuerpo" fill="#fff8fb" fill-opacity=".75" stroke="none"/>
+          <rect id="nivel" x="30" y="192" width="250" height="0" fill="#741e31" opacity=".45" stroke="none" clip-path="url(#cuerpo)"/>
+          <use href="#forma-cuerpo"/>
+          <path d="M106,186 V206 Q106,214 114,214 H128 Q136,214 136,206 V190"/>
+          <path d="M166,190 V206 Q166,214 174,214 H188 Q196,214 196,206 V186"/>
+          <path d="M190,76 L210,52 Q226,54 228,70 L222,94"/>
+          <path d="M212,112 Q221,122 230,112"/>
+          <path d="M64,126 C48,130 36,124 40,114 C44,106 56,110 52,118 C50,122 44,120 46,116"/>
+          <path d="M128,66 Q150,76 172,66"/>
+        </g>
+      </svg>
+    </div>
+
+    <p class="cantidad"><strong id="ahorrado">0 €</strong> de <span id="objetivo">0 €</span></p>
+    <div class="barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="barra"><div id="relleno"></div></div>
+    <p id="mensaje" aria-live="polite"></p>
+
+    <h2>¿Qué metes hoy?</h2>
+    <div class="dinero" id="dinero"></div>
+
+    <button id="borrar" class="secundario">Borrar esta hucha</button>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
